@@ -6,94 +6,63 @@
   <meta name="theme-color" content="#2f6f3e" />
   <title>Мій календар садівника</title>
 
-  <!-- PWA basics -->
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="apple-touch-icon" href="icon-192.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
   <style>
-    :root {
-      --bg: #0f1a12;
-      --card: #162319;
-      --text: #e9f5ec;
-      --muted: #b7d7bf;
-      --accent: #5bd07a;
-      --accent2: #2f6f3e;
-      --line: rgba(255,255,255,.10);
-      --shadow: 0 10px 25px rgba(0,0,0,.35);
-      --r: 18px;
-      font-synthesis-weight: none;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+    :root{
+      --bg:#0f1a12; --card:#162319; --text:#e9f5ec; --muted:#b7d7bf;
+      --accent:#5bd07a; --accent2:#2f6f3e; --line:rgba(255,255,255,.10);
+      --shadow:0 10px 25px rgba(0,0,0,.35); --r:18px;
+      text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
     }
-    body {
-      margin: 0; background: radial-gradient(1200px 800px at 20% 0%, #173322 0%, var(--bg) 55%);
-      color: var(--text);
-      font: 16px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, Arial, sans-serif;
-    }
-    .wrap { max-width: 720px; margin: 0 auto; padding: 18px 14px 44px; }
-    header {
-      display:flex; align-items:flex-start; justify-content:space-between; gap: 10px; margin-top: 6px;
-    }
-    .title { font-size: 22px; font-weight: 800; letter-spacing: .2px; }
-    .sub { color: var(--muted); font-size: 13px; margin-top: 4px; }
-    .pill {
-      border: 1px solid var(--line); background: rgba(255,255,255,.03);
-      padding: 8px 10px; border-radius: 999px; font-size: 12px; color: var(--muted);
-      display:flex; align-items:center; gap: 6px;
-    }
-    .grid { display:grid; gap: 12px; margin-top: 14px; }
-    .card {
-      background: linear-gradient(180deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.02) 100%);
-      border: 1px solid var(--line);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      padding: 14px;
-    }
-    .h { display:flex; align-items:center; justify-content:space-between; gap: 10px; }
-    .h h2 { margin: 0; font-size: 16px; }
-    .tag { font-size: 12px; color: var(--muted); border: 1px solid var(--line); padding: 4px 8px; border-radius: 999px;}
-    .section { margin-top: 10px; border-top: 1px solid var(--line); padding-top: 10px; }
-    .choice { margin-top: 10px; }
-    .choiceTitle { display:flex; align-items:center; justify-content:space-between; gap:8px; }
-    .choiceTitle b { font-size: 14px; }
-    .time { color: var(--muted); font-size: 12px; }
-    ul { margin: 8px 0 0 18px; padding: 0; }
-    li { margin: 6px 0; }
-    .tip {
-      margin-top: 12px; padding: 10px 12px; border-radius: 14px;
-      background: rgba(91,208,122,.08); border: 1px solid rgba(91,208,122,.22);
-      color: #dff7e6;
-    }
-    .btnRow { display:flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-    button {
-      appearance:none; border: 1px solid var(--line); background: rgba(255,255,255,.03);
-      color: var(--text); padding: 10px 12px; border-radius: 14px; font-weight: 700;
-    }
-    button.primary { border-color: rgba(91,208,122,.35); background: rgba(91,208,122,.16); }
-    button:active { transform: translateY(1px); }
-    .small { font-size: 12px; color: var(--muted); margin-top: 10px; }
-    nav {
-      position: sticky; bottom: 0; margin-top: 14px;
-      background: rgba(15,26,18,.75); backdrop-filter: blur(10px);
-      border: 1px solid var(--line); border-radius: 18px; padding: 10px;
-      display:flex; gap: 8px; justify-content: space-between;
-    }
-    nav a {
-      flex: 1; text-align:center; text-decoration:none; color: var(--muted);
-      padding: 10px 8px; border-radius: 14px; border: 1px solid transparent;
-      font-weight: 700; font-size: 13px;
-    }
-    nav a.active { color: var(--text); background: rgba(255,255,255,.04); border-color: var(--line); }
-    .view { display:none; }
-    .view.active { display:block; }
-    .list { margin-top: 10px; display:grid; gap: 10px; }
-    .item { border: 1px solid var(--line); border-radius: 14px; padding: 10px 12px; background: rgba(255,255,255,.02); }
-    .item b { display:block; }
-    .item .meta { color: var(--muted); font-size: 12px; margin-top: 4px; }
-    .empty { color: var(--muted); text-align:center; padding: 16px 0; }
+    body{ margin:0; background:radial-gradient(1200px 800px at 20% 0%, #173322 0%, var(--bg) 55%); color:var(--text);
+      font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Arial,sans-serif;}
+    .wrap{ max-width:720px; margin:0 auto; padding:18px 14px 44px;}
+    header{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-top:6px;}
+    .title{ font-size:22px; font-weight:800; letter-spacing:.2px;}
+    .sub{ color:var(--muted); font-size:13px; margin-top:4px;}
+    .pill{ border:1px solid var(--line); background:rgba(255,255,255,.03); padding:8px 10px; border-radius:999px;
+      font-size:12px; color:var(--muted); display:flex; align-items:center; gap:6px;}
+    .grid{ display:grid; gap:12px; margin-top:14px;}
+    .card{ background:linear-gradient(180deg, rgba(255,255,255,.04) 0%, rgba(255,255,255,.02) 100%);
+      border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--shadow); padding:14px;}
+    .h{ display:flex; align-items:center; justify-content:space-between; gap:10px;}
+    .h h2{ margin:0; font-size:16px;}
+    .tag{ font-size:12px; color:var(--muted); border:1px solid var(--line); padding:4px 8px; border-radius:999px;}
+    .section{ margin-top:10px; border-top:1px solid var(--line); padding-top:10px;}
+    .choice{ margin-top:10px;}
+    .choiceTitle{ display:flex; align-items:center; justify-content:space-between; gap:8px;}
+    .choiceTitle b{ font-size:14px;}
+    .time{ color:var(--muted); font-size:12px;}
+    ul{ margin:8px 0 0 18px; padding:0;}
+    li{ margin:6px 0;}
+    .tip{ margin-top:12px; padding:10px 12px; border-radius:14px; background:rgba(91,208,122,.08);
+      border:1px solid rgba(91,208,122,.22); color:#dff7e6;}
+    .btnRow{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
+    button{ appearance:none; border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--text);
+      padding:10px 12px; border-radius:14px; font-weight:800;}
+    button.primary{ border-color:rgba(91,208,122,.35); background:rgba(91,208,122,.16);}
+    button:active{ transform:translateY(1px);}
+    .small{ font-size:12px; color:var(--muted); margin-top:10px;}
+    nav{ position:sticky; bottom:0; margin-top:14px; background:rgba(15,26,18,.75); backdrop-filter:blur(10px);
+      border:1px solid var(--line); border-radius:18px; padding:10px; display:flex; gap:8px; justify-content:space-between;}
+    nav a{ flex:1; text-align:center; text-decoration:none; color:var(--muted); padding:10px 8px; border-radius:14px;
+      border:1px solid transparent; font-weight:800; font-size:13px;}
+    nav a.active{ color:var(--text); background:rgba(255,255,255,.04); border-color:var(--line);}
+    .view{ display:none;}
+    .view.active{ display:block;}
+    .list{ margin-top:10px; display:grid; gap:10px;}
+    .item{ border:1px solid var(--line); border-radius:14px; padding:10px 12px; background:rgba(255,255,255,.02);}
+    .item b{ display:block;}
+    .item .meta{ color:var(--muted); font-size:12px; margin-top:4px;}
+    .empty{ color:var(--muted); text-align:center; padding:16px 0;}
+    select,input{ width:100%; margin-top:6px; padding:10px 12px; border-radius:14px; border:1px solid var(--line);
+      background:rgba(255,255,255,.03); color:var(--text);}
+    .row{ display:flex; gap:10px; }
+    .row > *{ flex:1; }
   </style>
 </head>
 
@@ -102,7 +71,7 @@
   <header>
     <div>
       <div class="title">Мій календар садівника 🌱</div>
-      <div class="sub" id="subtitle">Павлівка, Вінницька область • мʼякий режим</div>
+      <div class="sub">Павлівка, Вінницька область • мʼякий режим</div>
     </div>
     <div class="pill">📅 <span id="todayStr"></span></div>
   </header>
@@ -111,10 +80,7 @@
   <section class="view active" id="view-today">
     <div class="grid">
       <div class="card">
-        <div class="h">
-          <h2>Сьогодні</h2>
-          <span class="tag">Обери рівень</span>
-        </div>
+        <div class="h"><h2>Сьогодні</h2><span class="tag">Обери рівень</span></div>
 
         <div class="choice">
           <div class="choiceTitle"><b>🟢 Легко</b><span class="time">10–15 хв</span></div>
@@ -141,37 +107,27 @@
       </div>
 
       <div class="card">
-        <div class="h">
-          <h2>Мʼякі підказки на сьогодні</h2>
-          <span class="tag">для “моїх посівів”</span>
-        </div>
+        <div class="h"><h2>М’які підказки на сьогодні</h2><span class="tag">посіви + зони</span></div>
         <div class="list" id="softReminders"></div>
-        <div class="empty" id="noReminders" style="display:none;">Поки що немає активних посівів. Додай щось — і я підкажу, коли глянути/полити 🙂</div>
+        <div class="empty" id="noReminders" style="display:none;">Поки що немає активних посівів/зон. Додай щось — і я підкажу 🙂</div>
       </div>
     </div>
   </section>
 
-  <!-- MY SOWINGS -->
+  <!-- SOWINGS -->
   <section class="view" id="view-sowings">
     <div class="grid">
       <div class="card">
-        <div class="h">
-          <h2>Мої посіви</h2>
-          <span class="tag" id="sowCount">0</span>
-        </div>
+        <div class="h"><h2>Мої посіви</h2><span class="tag" id="sowCount">0</span></div>
         <div class="list" id="sowingList"></div>
         <div class="empty" id="emptySowings">Тут з’явиться список, коли ти відмітиш “я посіяла / посадила” 🌿</div>
       </div>
 
       <div class="card">
-        <div class="h">
-          <h2>Додати посів</h2>
-          <span class="tag">1 хв</span>
-        </div>
-
+        <div class="h"><h2>Додати посів</h2><span class="tag">1 хв</span></div>
         <div class="section">
-          <label class="small">Що ти зробила?</label><br/>
-          <select id="sowType" style="width:100%; margin-top:6px; padding:10px 12px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--text);">
+          <label class="small">Що ти зробила?</label>
+          <select id="sowType">
             <option value="microgreens">Мікрозелень</option>
             <option value="greens">Зелень у горщику</option>
             <option value="onion">Цибуля на перо</option>
@@ -180,182 +136,213 @@
           </select>
 
           <label class="small" style="display:block; margin-top:10px;">Коли?</label>
-          <input id="sowDate" type="date" style="width:100%; margin-top:6px; padding:10px 12px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--text);" />
+          <input id="sowDate" type="date" />
 
           <label class="small" style="display:block; margin-top:10px;">Нотатка (необовʼязково)</label>
-          <input id="sowNote" placeholder="Напр., «петрушка в мисці»" style="width:100%; margin-top:6px; padding:10px 12px; border-radius:14px; border:1px solid var(--line); background:rgba(255,255,255,.03); color:var(--text);" />
+          <input id="sowNote" placeholder="Напр., «петрушка в мисці»" />
 
           <div class="btnRow" style="margin-top:12px;">
             <button class="primary" id="btnSaveSowing">➕ Додати</button>
             <button id="btnClearAll">🧹 Очистити все</button>
           </div>
-
-          <div class="small">Додаток підкаже “коли глянути/полити” м’яко — без тиску 🙂</div>
+          <div class="small">Підказки м’які: “якщо буде настрій…” без тиску 🤍</div>
         </div>
       </div>
     </div>
   </section>
-<nav>
-  <a href="#" data-go="today" class="active">Сьогодні</a>
-  <a href="#" data-go="sowings">Мої посіви</a>
-  <a href="#" data-go="zones">Зони</a>
-  <a href="#" data-go="calendar">Календар</a>
-</nav>
 
-  <!-- CALENDAR (simple) -->
+  <!-- ZONES -->
+  <section class="view" id="view-zones">
+    <div class="grid">
+      <div class="card">
+        <div class="h"><h2>Мої зони</h2><span class="tag" id="zoneCount">0</span></div>
+        <div class="list" id="zoneList"></div>
+        <div class="empty" id="emptyZones">Додай грядку/город/квітник — і я підкажу, що можна робити саме там 🙂</div>
+      </div>
+
+      <div class="card">
+        <div class="h"><h2>Додати зону</h2><span class="tag">1 хв</span></div>
+        <div class="section">
+          <label class="small">Тип</label>
+          <select id="zoneType">
+            <option value="high_bed">Висока грядка</option>
+            <option value="garden">Город (ділянка)</option>
+            <option value="flowers">Квітник / поле квітів</option>
+          </select>
+
+          <label class="small" style="display:block; margin-top:10px;">Назва</label>
+          <input id="zoneName" placeholder="Напр., Висока грядка №1" />
+
+          <label class="small" style="display:block; margin-top:10px;">Розмір (м)</label>
+          <div class="row">
+            <input id="zoneLen" inputmode="decimal" placeholder="Довжина (напр. 2)" />
+            <input id="zoneWid" inputmode="decimal" placeholder="Ширина (напр. 1)" />
+          </div>
+
+          <label class="small" style="display:block; margin-top:10px;">Що росте</label>
+          <select id="zoneCrop">
+            <option value="strawberry">Полуниця</option>
+            <option value="garlic">Часник</option>
+            <option value="flowers_general">Квіти (загально)</option>
+            <option value="other">Інше</option>
+          </select>
+
+          <label class="small" style="display:block; margin-top:10px;">Кількість (кущі/рослини)</label>
+          <input id="zoneQty" inputmode="numeric" placeholder="Напр., 24" />
+
+          <label class="small" style="display:block; margin-top:10px;">Нотатка (необовʼязково)</label>
+          <input id="zoneNote" placeholder="Напр., пересадила восени" />
+
+          <div class="btnRow" style="margin-top:12px;">
+            <button class="primary" id="btnSaveZone">➕ Додати зону</button>
+            <button id="btnAddStrawberry">🍓 Додати мою полуницю</button>
+            <button id="btnClearZones">🧹 Очистити зони</button>
+          </div>
+          <div class="small">Підказки будуть м’які: “якщо буде настрій…” без тиску 🤍</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDAR -->
   <section class="view" id="view-calendar">
     <div class="grid">
       <div class="card">
-        <div class="h">
-          <h2>Календар</h2>
-          <span class="tag">демо</span>
-        </div>
+        <div class="h"><h2>Календар</h2><span class="tag">демо</span></div>
         <div class="section">
-          <div class="small">Тут буде місяць/тиждень. У демо — короткий “план-ідеї” на найближчі дні.</div>
+          <div class="small">Демо “план-ідеї” на найближчі 7 днів.</div>
           <div class="list" id="calendarList"></div>
         </div>
       </div>
     </div>
   </section>
 
- <nav>
-  <a href="#" data-go="today" class="active">Сьогодні</a>
-  <a href="#" data-go="sowings">Мої посіви</a>
-  <a href="#" data-go="zones">Зони</a>
-  <a href="#" data-go="calendar">Календар</a>
-</nav>
-
+  <nav>
+    <a href="#" data-go="today" class="active">Сьогодні</a>
+    <a href="#" data-go="sowings">Мої посіви</a>
+    <a href="#" data-go="zones">Зони</a>
+    <a href="#" data-go="calendar">Календар</a>
+  </nav>
 </div>
 
 <script>
-  // --- utilities
   const $ = (id) => document.getElementById(id);
-  const pad = (n) => String(n).padStart(2, "0");
+  const pad = (n) => String(n).padStart(2,"0");
   const isoDate = (d) => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-  const uaDate = (d) => d.toLocaleDateString("uk-UA", { year:"numeric", month:"long", day:"numeric" });
-
-  // --- seed daily content (January demo; can expand later)
-  const daily = {
-    // keys: YYYY-MM-DD
-    // For demo, we provide for a few days; if missing, fallback logic kicks in.
-  };
+  const uaDate = (d) => d.toLocaleDateString("uk-UA",{year:"numeric",month:"long",day:"numeric"});
 
   function fallbackDaily(d){
-    // Gentle, but with actionable options.
-    const m = d.getMonth(); // 0=Jan
-    if (m === 0) { // January
+    const m=d.getMonth();
+    if(m===0){ // January
       return {
-        easy: [
-          "Глянути, чи не тягне холодом з вікна (розсада це не любить 😅)",
+        easy:[
+          "Глянути, чи не тягне холодом з вікна (розсада цього не любить 😅)",
           "Перевірити, де буде стояти розсада: світло + тепло",
-          "Зробити міні-ревізію насіння (що є, що докупити)"
+          "Міні-ревізія насіння: що є, що докупити"
         ],
-        do: [
-          "Посадити цибулю на перо (швидкий кайф без ризику)",
-          "Посіяти мікрозелень (редис/гірчиця/горох) — це реально просто",
+        do:[
+          "Посадити цибулю на перо (швидкий результат без ризику)",
+          "Посіяти мікрозелень (редис/гірчиця/горох) — реально просто",
           "Посіяти зелень у горщик (кріп/петрушка/салат) — для настрою"
         ],
-        sow: [
+        sow:[
           "Якщо дуже хочеться: квіти з довгим стартом (еустома/бегонія/пеларгонія)",
           "Або “квіти (загально)” — і потім вирішиш точніше",
           "Головне: рівномірна волога, без болота 🙂"
         ],
-        tip: "Якщо ти ще не знаєш, чого хочеш — це нормально. Обери один маленький крок, і ти вже в процесі 🌿"
+        tip:"Якщо ти ще не знаєш, чого хочеш — це нормально. Обери один маленький крок, і ти вже в процесі 🌿"
       };
     }
-    // Other months later
-    return {
-      easy:["Легкий огляд рослин і простору."],
-      do:["Щось маленьке, що дає відчуття руху."],
-      sow:["Щось безпечне для старту."],
-      tip:"Ти молодець, що повернулась до цього 🌱"
-    };
+    return {easy:["Легкий огляд простору."],do:["Щось маленьке для руху."],sow:["Щось безпечне для старту."],tip:"Ти молодець, що повернулась 🌱"};
   }
 
   function setTodayContent(){
-    const now = new Date();
-    $("todayStr").textContent = uaDate(now);
-    const key = isoDate(now);
-    const content = daily[key] || fallbackDaily(now);
-
-    const fill = (ul, arr) => {
-      ul.innerHTML = "";
-      for (const t of arr) {
-        const li = document.createElement("li");
-        li.textContent = t;
-        ul.appendChild(li);
-      }
-    };
-
-    fill($("easyList"), content.easy);
-    fill($("doList"), content.do);
-    fill($("sowList"), content.sow);
-    $("tipBox").textContent = "💡 " + content.tip;
-
+    const now=new Date();
+    $("todayStr").textContent=uaDate(now);
+    const c=fallbackDaily(now);
+    const fill=(ul,arr)=>{ ul.innerHTML=""; arr.forEach(t=>{ const li=document.createElement("li"); li.textContent=t; ul.appendChild(li);});};
+    fill($("easyList"),c.easy); fill($("doList"),c.do); fill($("sowList"),c.sow);
+    $("tipBox").textContent="💡 "+c.tip;
     renderCalendarDemo(now);
   }
 
-  // --- simple sowing tracker + soft reminders
-  const STORAGE_KEY = "my_garden_sowings_v1";
-  const DONE_KEY = "my_garden_done_v1";
+  // --- sowings
+  const STORAGE_KEY="my_garden_sowings_v1";
+  function loadSowings(){ try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||"[]");}catch{return[];} }
+  function saveSowings(a){ localStorage.setItem(STORAGE_KEY,JSON.stringify(a)); }
 
-  function loadSowings(){
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]"); }
-    catch { return []; }
-  }
-  function saveSowings(arr){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
-  }
-  // --- zones (beds/garden/flowers)
-  const ZONES_KEY = "my_garden_zones_v1";
-
-  function loadZones(){
-    try { return JSON.parse(localStorage.getItem(ZONES_KEY) || "[]"); }
-    catch { return []; }
-  }
-  function saveZones(arr){
-    localStorage.setItem(ZONES_KEY, JSON.stringify(arr));
-  }
-
-  function zoneTypeTitle(t){
-    switch(t){
-      case "high_bed": return "Висока грядка";
-      case "garden": return "Город";
-      case "flowers": return "Квітник/поле";
-      default: return "Зона";
-    }
-  }
-  function cropTitle(c){
-    switch(c){
-      case "strawberry": return "Полуниця";
-      case "garlic": return "Часник";
-      case "flowers_general": return "Квіти";
-      default: return "Інше";
+  function typeMeta(type){
+    switch(type){
+      case "microgreens": return {title:"Мікрозелень", checkDays:[1,3,6], hint:"Легка волога щодня/через день, без болота."};
+      case "greens": return {title:"Зелень у горщику", checkDays:[2,4,7], hint:"Підсох верхній шар — злегка полий."};
+      case "onion": return {title:"Цибуля на перо", checkDays:[2,5,8], hint:"Помірна волога, не заливай."};
+      case "flowers_long": return {title:"Квіти (довгий старт)", checkDays:[2,5,10,14], hint:"Рівна волога + світло. Перелив — ворог №1 😅"};
+      default: return {title:"Інше", checkDays:[2,5,9], hint:"М’яка перевірка вологи та світла 🙂"};
     }
   }
 
-  function zoneSoftTips(zone, now){
-    // very gentle, month-based starter hints
-    const m = now.getMonth(); // 0=Jan
-    const tips = [];
-    if (zone.crop === "strawberry"){
-      if (m === 0 || m === 1) { // Jan-Feb
+  function computeSowingReminders(){
+    const now=new Date();
+    const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+    const out=[];
+    for(const s of loadSowings()){
+      const meta=typeMeta(s.type);
+      const sd=new Date(s.date);
+      const start=new Date(sd.getFullYear(),sd.getMonth(),sd.getDate());
+      const diff=Math.round((today-start)/(1000*60*60*24));
+      if(diff<0) continue;
+      if(meta.checkDays.includes(diff)){
+        out.push({title:meta.title, text:`Якщо буде настрій — можна глянути ґрунт (день ${diff} після посіву).`, note:s.note||"", hint:meta.hint});
+      }
+    }
+    return out;
+  }
+
+  function renderSowings(){
+    const sow=loadSowings().sort((a,b)=>a.date<b.date?1:-1);
+    $("sowCount").textContent=String(sow.length);
+    $("emptySowings").style.display=sow.length?"none":"block";
+    const list=$("sowingList"); list.innerHTML="";
+    for(const s of sow){
+      const meta=typeMeta(s.type);
+      const d=new Date(s.date).toLocaleDateString("uk-UA",{year:"numeric",month:"short",day:"numeric"});
+      const div=document.createElement("div"); div.className="item";
+      div.innerHTML=`<b>${meta.title}</b><div class="meta">Посіяно/посаджено: ${d}${s.note?" • "+s.note:""}</div>
+        <div class="btnRow" style="margin-top:10px;"><button data-del="${s.id}">🗑 Видалити</button></div>`;
+      list.appendChild(div);
+    }
+    list.querySelectorAll("button[data-del]").forEach(btn=>{
+      btn.addEventListener("click",()=>{ const id=btn.getAttribute("data-del"); saveSowings(loadSowings().filter(x=>x.id!==id)); renderAll();});
+    });
+  }
+
+  // --- zones
+  const ZONES_KEY="my_garden_zones_v1";
+  function loadZones(){ try{return JSON.parse(localStorage.getItem(ZONES_KEY)||"[]");}catch{return[];} }
+  function saveZones(a){ localStorage.setItem(ZONES_KEY,JSON.stringify(a)); }
+
+  const zoneTypeTitle=(t)=>t==="high_bed"?"Висока грядка":t==="garden"?"Город":t==="flowers"?"Квітник/поле":"Зона";
+  const cropTitle=(c)=>c==="strawberry"?"Полуниця":c==="garlic"?"Часник":c==="flowers_general"?"Квіти":"Інше";
+
+  function zoneTips(zone){
+    const m=(new Date()).getMonth();
+    const tips=[];
+    if(zone.crop==="strawberry"){
+      if(m===0||m===1){
         tips.push("Якщо буде настрій — глянь, чи не оголились корені після вітру/відлиг.");
         tips.push("Якщо ґрунт мокрий і важкий — краще не чіпати, просто перевірити мульчу/укриття.");
         tips.push("Якщо без снігу й морозно — легке укриття/мульча може бути доречною.");
-      } else if (m === 2) { // Mar
+      } else if(m===2){
         tips.push("Якщо потепліло — можна потроху прибрати сухе листя (без фанатизму).");
-        tips.push("Якщо є час — огляд на підгнивання, провітрити посадки.");
-      } else if (m === 3) { // Apr
-        tips.push("Якщо земля підсохла — м’яке підживлення (за бажанням) і розпушити міжряддя.");
-        tips.push("Якщо хочеться — профілактичний огляд шкідників/хвороб.");
+      } else if(m===3){
+        tips.push("Якщо земля підсохла — легке підживлення за бажанням і розпушити міжряддя.");
       } else {
         tips.push("Якщо буде настрій — легкий огляд і підтримка вологи без переливу 🙂");
       }
-    } else if (zone.crop === "garlic"){
-      tips.push("Якщо буде настрій — перевір, чи не виперло зубці після морозу/відлиги.");
-    } else if (zone.crop === "flowers_general"){
-      tips.push("Якщо буде настрій — огляд зимівлі/укриття, без різких рухів 🙂");
+    } else if(zone.crop==="garlic"){
+      tips.push("Якщо буде настрій — перевір, чи не “виперло” зубці після морозу/відлиги.");
+    } else if(zone.crop==="flowers_general"){
+      tips.push("М’яко: огляд зимівлі/укриття, без різких рухів 🙂");
     } else {
       tips.push("М’який огляд: волога/укриття/порядок на зоні.");
     }
@@ -363,336 +350,157 @@
   }
 
   function renderZones(){
-    const zones = loadZones();
-    $("zoneCount").textContent = String(zones.length);
-    $("emptyZones").style.display = zones.length ? "none" : "block";
-
-    const list = $("zoneList");
-    list.innerHTML = "";
-
-    const now = new Date();
-
-    for (const z of zones){
-      const div = document.createElement("div");
-      div.className = "item";
-      const size = (z.len && z.wid) ? `${z.len}×${z.wid} м` : "розмір не вказано";
-      const crop = cropTitle(z.crop);
-      const qty = z.qty ? `${z.qty}` : "—";
-
-      const tips = zoneSoftTips(z, now).slice(0,2).map(t=>`<div class="meta">• ${t}</div>`).join("");
-
-      div.innerHTML = `
-        <b>${z.name || zoneTypeTitle(z.type)}</b>
+    const zones=loadZones();
+    $("zoneCount").textContent=String(zones.length);
+    $("emptyZones").style.display=zones.length?"none":"block";
+    const list=$("zoneList"); list.innerHTML="";
+    for(const z of zones){
+      const size=(z.len&&z.wid)?`${z.len}×${z.wid} м`:"розмір не вказано";
+      const tips=zoneTips(z);
+      const div=document.createElement("div"); div.className="item";
+      div.innerHTML=`<b>${z.name||zoneTypeTitle(z.type)}</b>
         <div class="meta">${zoneTypeTitle(z.type)} • ${size}</div>
-        <div class="meta">${crop} • кількість: ${qty}${z.note ? " • " + z.note : ""}</div>
+        <div class="meta">${cropTitle(z.crop)} • кількість: ${z.qty||"—"}${z.note?" • "+z.note:""}</div>
         <div class="meta" style="margin-top:6px;">Підказки (м’яко):</div>
-        ${tips}
-        <div class="btnRow" style="margin-top:10px;">
-          <button data-zdel="${z.id}">🗑 Видалити</button>
-        </div>
-      `;
+        <div class="meta">• ${tips[0]||"—"}</div>
+        ${tips[1]?`<div class="meta">• ${tips[1]}</div>`:""}
+        <div class="btnRow" style="margin-top:10px;"><button data-zdel="${z.id}">🗑 Видалити</button></div>`;
       list.appendChild(div);
     }
-
     list.querySelectorAll("button[data-zdel]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const id = btn.getAttribute("data-zdel");
-        saveZones(loadZones().filter(x=> x.id !== id));
-        renderZones();
-        renderZonesInToday();
-      });
+      btn.addEventListener("click",()=>{ const id=btn.getAttribute("data-zdel"); saveZones(loadZones().filter(x=>x.id!==id)); renderAll();});
     });
   }
 
-  function renderZonesInToday(){
-    // show gentle zone tips inside "М’які підказки на сьогодні"
-    const zones = loadZones();
-    const now = new Date();
-
-    // append zone tips to existing reminders box
-    const box = $("softReminders");
-    const no = $("noReminders");
-
-    let added = 0;
-    for (const z of zones){
-      const tips = zoneSoftTips(z, now);
-      if (!tips.length) continue;
-
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `
-        <b>${z.name || zoneTypeTitle(z.type)} • ${cropTitle(z.crop)}</b>
-        <div class="meta">${tips[0]}</div>
-      `;
-      box.appendChild(div);
-      added++;
-      if (added >= 3) break; // keep it light
-    }
-
-    // if there are no sowings AND no zones, show empty message
-    if (loadSowings().length === 0 && zones.length === 0){
-      no.style.display = "block";
-    } else {
-      no.style.display = "none";
-    }
-  }
-
-  function wireZonesForm(){
-    $("btnSaveZone").addEventListener("click", ()=>{
-      const z = {
-        id: String(Date.now()) + Math.random().toString(16).slice(2),
-        type: $("zoneType").value,
-        name: $("zoneName").value.trim(),
-        len: $("zoneLen").value.trim(),
-        wid: $("zoneWid").value.trim(),
-        crop: $("zoneCrop").value,
-        qty: $("zoneCountInput").value.trim(),
-        note: $("zoneNote").value.trim()
-      };
-      const zones = loadZones();
-      zones.push(z);
-      saveZones(zones);
-
-      $("zoneName").value = "";
-      $("zoneLen").value = "";
-      $("zoneWid").value = "";
-      $("zoneCountInput").value = "";
-      $("zoneNote").value = "";
-
-      renderZones();
-      renderZonesInToday();
-      go("zones");
-    });
-
-    // one-click demo for your strawberry bed 2×1, 24 bushes
-    $("btnAddStrawberryDemo").addEventListener("click", ()=>{
-      const zones = loadZones();
-      zones.push({
-        id: String(Date.now()) + Math.random().toString(16).slice(2),
-        type: "high_bed",
-        name: "Висока грядка №1",
-        len: "2",
-        wid: "1",
-        crop: "strawberry",
-        qty: "24",
-        note: "пересадила восени"
-      });
-      saveZones(zones);
-      renderZones();
-      renderZonesInToday();
-      go("zones");
-    });
-  }
-
-  function typeMeta(type){
-    switch(type){
-      case "microgreens":
-        return { title:"Мікрозелень", checkDays:[1,3,6], waterHint:"Легка волога щодня/через день, без болота." };
-      case "greens":
-        return { title:"Зелень у горщику", checkDays:[2,4,7], waterHint:"Перевіряй верхній шар: підсох — злегка полий." };
-      case "onion":
-        return { title:"Цибуля на перо", checkDays:[2,5,8], waterHint:"Тримай помірно вологим, але не заливай." };
-      case "flowers_long":
-        return { title:"Квіти (довгий старт)", checkDays:[2,5,10,14], waterHint:"Головне — рівна волога + світло. Перелив — ворог №1 😅" };
-      default:
-        return { title:"Інше", checkDays:[2,5,9], waterHint:"М’яка перевірка вологи та світла, без паніки 🙂" };
-    }
-  }
-
-  function computeSoftReminders(sowings){
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    const reminders = [];
-
-    for (const s of sowings){
-      const meta = typeMeta(s.type);
-      const sd = new Date(s.date);
-      const start = new Date(sd.getFullYear(), sd.getMonth(), sd.getDate());
-      const diffDays = Math.round((today - start) / (1000*60*60*24));
-
-      // If sowing date is in future, skip
-      if (diffDays < 0) continue;
-
-      // If today matches one of checkDays -> gentle reminder
-      if (meta.checkDays.includes(diffDays)){
-        reminders.push({
-          id: s.id,
-          title: meta.title,
-          text: `Якщо буде настрій — можна глянути, як там ґрунт (день ${diffDays} після посіву).`,
-          note: s.note || "",
-          hint: meta.waterHint
-        });
-      }
-    }
-    return reminders;
-  }
-
-  function renderSowings(){
-    const sowings = loadSowings().sort((a,b)=> (a.date < b.date ? 1 : -1));
-    const list = $("sowingList");
-    list.innerHTML = "";
-
-    $("sowCount").textContent = String(sowings.length);
-    $("emptySowings").style.display = sowings.length ? "none" : "block";
-
-    for (const s of sowings){
-      const meta = typeMeta(s.type);
-      const div = document.createElement("div");
-      div.className = "item";
-      const dateStr = new Date(s.date).toLocaleDateString("uk-UA", {year:"numeric",month:"short",day:"numeric"});
-      div.innerHTML = `
-        <b>${meta.title}</b>
-        <div class="meta">Посіяно/посаджено: ${dateStr}${s.note ? " • " + s.note : ""}</div>
-        <div class="btnRow" style="margin-top:10px;">
-          <button data-del="${s.id}">🗑 Видалити</button>
-        </div>
-      `;
-      list.appendChild(div);
-    }
-
-    // delete handlers
-    list.querySelectorAll("button[data-del]").forEach(btn=>{
-      btn.addEventListener("click", ()=>{
-        const id = btn.getAttribute("data-del");
-        const next = loadSowings().filter(x=> x.id !== id);
-        saveSowings(next);
-        renderAll();
-      });
-    });
-  }
-
+  // --- soft reminders (sowings + zones)
   function renderSoftReminders(){
-    const sowings = loadSowings();
-    const reminders = computeSoftReminders(sowings);
-    const box = $("softReminders");
-    box.innerHTML = "";
+    const box=$("softReminders");
+    box.innerHTML="";
+    let count=0;
 
-    $("noReminders").style.display = reminders.length ? "none" : "block";
-
-    for (const r of reminders){
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `
-        <b>${r.title}</b>
-        <div class="meta">${r.text}</div>
-        ${r.note ? `<div class="meta">Нотатка: ${r.note}</div>` : ""}
-        <div class="meta">Підказка: ${r.hint}</div>
-      `;
-      box.appendChild(div);
+    for(const r of computeSowingReminders()){
+      const div=document.createElement("div"); div.className="item";
+      div.innerHTML=`<b>${r.title}</b><div class="meta">${r.text}</div>${r.note?`<div class="meta">Нотатка: ${r.note}</div>`:""}<div class="meta">Підказка: ${r.hint}</div>`;
+      box.appendChild(div); count++;
     }
+
+    // append a few zone tips (keep light)
+    for(const z of loadZones()){
+      if(count>=6) break;
+      const tips=zoneTips(z);
+      const div=document.createElement("div"); div.className="item";
+      div.innerHTML=`<b>${z.name||zoneTypeTitle(z.type)} • ${cropTitle(z.crop)}</b><div class="meta">${tips[0]}</div>`;
+      box.appendChild(div); count++;
+    }
+
+    $("noReminders").style.display = count===0 ? "block" : "none";
   }
 
-  // --- Done button (gentle)
-  function loadDone(){
-    try { return JSON.parse(localStorage.getItem(DONE_KEY) || "{}"); }
-    catch { return {}; }
-  }
-  function saveDone(obj){ localStorage.setItem(DONE_KEY, JSON.stringify(obj)); }
+  // --- done tracker
+  const DONE_KEY="my_garden_done_v1";
+  function loadDone(){ try{return JSON.parse(localStorage.getItem(DONE_KEY)||"{}");}catch{return{};} }
+  function saveDone(o){ localStorage.setItem(DONE_KEY,JSON.stringify(o)); }
 
   function wireDone(){
-    const now = new Date();
-    const key = isoDate(now);
-    const done = loadDone();
-    const hint = $("doneHint");
-
-    function render(){
-      hint.textContent = done[key]
-        ? "Супер 🙂 Я відмітила, що сьогодні ти щось зробила. Якщо завтра буде важко — нічого страшного."
-        : "Можеш відмітити, якщо сьогодні хоч трошки щось зробила. А якщо ні — теж ок 🤍";
-    }
+    const key=isoDate(new Date());
+    const done=loadDone();
+    const hint=$("doneHint");
+    const render=()=>{ hint.textContent = done[key]
+      ? "Супер 🙂 Я відмітила, що сьогодні ти щось зробила. Якщо завтра буде важко — нічого страшного."
+      : "Можеш відмітити, якщо сьогодні хоч трошки щось зробила. А якщо ні — теж ок 🤍";};
     render();
-
-    $("btnDone").addEventListener("click", ()=>{
-      done[key] = true;
-      saveDone(done);
-      render();
-    });
+    $("btnDone").addEventListener("click",()=>{ done[key]=true; saveDone(done); render(); });
   }
 
-  // --- Add sowing quick button
+  // --- forms
   function wireSowingForm(){
-    const now = new Date();
-    $("sowDate").value = isoDate(now);
-
-    $("btnSaveSowing").addEventListener("click", ()=>{
-      const type = $("sowType").value;
-      const date = $("sowDate").value || isoDate(new Date());
-      const note = $("sowNote").value.trim();
-
-      const sowings = loadSowings();
-      sowings.push({
-        id: String(Date.now()) + Math.random().toString(16).slice(2),
-        type, date, note
-      });
-      saveSowings(sowings);
-
-      $("sowNote").value = "";
+    $("sowDate").value=isoDate(new Date());
+    $("btnSaveSowing").addEventListener("click",()=>{
+      const sow=loadSowings();
+      sow.push({id:String(Date.now())+Math.random().toString(16).slice(2), type:$("sowType").value, date:$("sowDate").value, note:$("sowNote").value.trim()});
+      saveSowings(sow);
+      $("sowNote").value="";
       renderAll();
       go("sowings");
     });
+    $("btnClearAll").addEventListener("click",()=>{
+      if(confirm("Точно очистити всі посіви? Це тільки твої локальні дані 🙂")){ saveSowings([]); renderAll(); }
+    });
+    $("btnAddSowing").addEventListener("click",()=>{ go("sowings"); window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"}); });
+  }
 
-    $("btnClearAll").addEventListener("click", ()=>{
-      if (confirm("Точно очистити всі посіви? Це тільки демо-дані 🙂")){
-        saveSowings([]);
-        renderAll();
-      }
+  function wireZonesForm(){
+    $("btnSaveZone").addEventListener("click",()=>{
+      const zones=loadZones();
+      zones.push({
+        id:String(Date.now())+Math.random().toString(16).slice(2),
+        type:$("zoneType").value,
+        name:$("zoneName").value.trim(),
+        len:$("zoneLen").value.trim(),
+        wid:$("zoneWid").value.trim(),
+        crop:$("zoneCrop").value,
+        qty:$("zoneQty").value.trim(),
+        note:$("zoneNote").value.trim()
+      });
+      saveZones(zones);
+      $("zoneName").value=""; $("zoneLen").value=""; $("zoneWid").value=""; $("zoneQty").value=""; $("zoneNote").value="";
+      renderAll(); go("zones");
     });
 
-    $("btnAddSowing").addEventListener("click", ()=>{
-      go("sowings");
-      // scroll to form gently
-      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    $("btnAddStrawberry").addEventListener("click",()=>{
+      const zones=loadZones();
+      zones.push({
+        id:String(Date.now())+Math.random().toString(16).slice(2),
+        type:"high_bed",
+        name:"Висока грядка №1",
+        len:"2",
+        wid:"1",
+        crop:"strawberry",
+        qty:"24",
+        note:"пересадила восени"
+      });
+      saveZones(zones);
+      renderAll(); go("zones");
+    });
+
+    $("btnClearZones").addEventListener("click",()=>{
+      if(confirm("Очистити всі зони?")){ saveZones([]); renderAll(); }
     });
   }
 
-  // --- calendar demo list
+  // --- calendar demo
   function renderCalendarDemo(now){
-    const list = $("calendarList");
-    list.innerHTML = "";
-    for (let i=0;i<7;i++){
-      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate()+i);
-      const dateStr = d.toLocaleDateString("uk-UA", { weekday:"short", day:"2-digit", month:"2-digit" });
-      const c = daily[isoDate(d)] || fallbackDaily(d);
-      const div = document.createElement("div");
-      div.className = "item";
-      div.innerHTML = `
-        <b>${dateStr}</b>
-        <div class="meta">🟢 ${c.easy[0]}</div>
-        <div class="meta">🟡 ${c.do[0]}</div>
-        <div class="meta">🔵 ${c.sow[0]}</div>
-      `;
+    const list=$("calendarList"); list.innerHTML="";
+    for(let i=0;i<7;i++){
+      const d=new Date(now.getFullYear(),now.getMonth(),now.getDate()+i);
+      const c=fallbackDaily(d);
+      const dateStr=d.toLocaleDateString("uk-UA",{weekday:"short",day:"2-digit",month:"2-digit"});
+      const div=document.createElement("div"); div.className="item";
+      div.innerHTML=`<b>${dateStr}</b><div class="meta">🟢 ${c.easy[0]}</div><div class="meta">🟡 ${c.do[0]}</div><div class="meta">🔵 ${c.sow[0]}</div>`;
       list.appendChild(div);
     }
   }
 
   // --- navigation
   function go(where){
-    document.querySelectorAll("nav a").forEach(a=> a.classList.remove("active"));
-    document.querySelectorAll(".view").forEach(v=> v.classList.remove("active"));
-
+    document.querySelectorAll("nav a").forEach(a=>a.classList.remove("active"));
+    document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
     document.querySelector(`nav a[data-go="${where}"]`).classList.add("active");
-    $("view-" + where).classList.add("active");
+    $("view-"+where).classList.add("active");
   }
-
   function wireNav(){
     document.querySelectorAll("nav a").forEach(a=>{
-      a.addEventListener("click", (e)=>{
-        e.preventDefault();
-        go(a.getAttribute("data-go"));
-      });
+      a.addEventListener("click",(e)=>{ e.preventDefault(); go(a.getAttribute("data-go")); });
     });
   }
 
-function renderAll(){
-  renderSowings();
-  renderSoftReminders();
-  renderZones();
-  // renderZonesInToday is called after renderSoftReminders to append tips
-  renderZonesInToday();
-}
+  function renderAll(){
+    renderSowings();
+    renderZones();
+    renderSoftReminders();
+  }
 
-
-  // --- init
+  // init
   setTodayContent();
   wireNav();
   wireDone();
@@ -700,8 +508,8 @@ function renderAll(){
   wireZonesForm();
   renderAll();
 
-  // Register service worker if present (added later)
-  if ("serviceWorker" in navigator){
+  // service worker (offline). If iOS is stubborn, bump CACHE name in sw.js.
+  if("serviceWorker" in navigator){
     navigator.serviceWorker.register("./sw.js").catch(()=>{});
   }
 </script>
