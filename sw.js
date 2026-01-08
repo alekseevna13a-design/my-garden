@@ -1,4 +1,4 @@
-const CACHE = "my-garden-v1";
+const CACHE = "my-garden-v2";
 const ASSETS = [
   "./",
   "./index.html",
