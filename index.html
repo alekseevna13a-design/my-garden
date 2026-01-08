@@ -195,6 +195,12 @@
       </div>
     </div>
   </section>
+<nav>
+  <a href="#" data-go="today" class="active">Сьогодні</a>
+  <a href="#" data-go="sowings">Мої посіви</a>
+  <a href="#" data-go="zones">Зони</a>
+  <a href="#" data-go="calendar">Календар</a>
+</nav>
 
   <!-- CALENDAR (simple) -->
   <section class="view" id="view-calendar">
@@ -212,11 +218,13 @@
     </div>
   </section>
 
-  <nav>
-    <a href="#" data-go="today" class="active">Сьогодні</a>
-    <a href="#" data-go="sowings">Мої посіви</a>
-    <a href="#" data-go="calendar">Календар</a>
-  </nav>
+ <nav>
+  <a href="#" data-go="today" class="active">Сьогодні</a>
+  <a href="#" data-go="sowings">Мої посіви</a>
+  <a href="#" data-go="zones">Зони</a>
+  <a href="#" data-go="calendar">Календар</a>
+</nav>
+
 </div>
 
 <script>
@@ -297,6 +305,183 @@
   }
   function saveSowings(arr){
     localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+  }
+  // --- zones (beds/garden/flowers)
+  const ZONES_KEY = "my_garden_zones_v1";
+
+  function loadZones(){
+    try { return JSON.parse(localStorage.getItem(ZONES_KEY) || "[]"); }
+    catch { return []; }
+  }
+  function saveZones(arr){
+    localStorage.setItem(ZONES_KEY, JSON.stringify(arr));
+  }
+
+  function zoneTypeTitle(t){
+    switch(t){
+      case "high_bed": return "Висока грядка";
+      case "garden": return "Город";
+      case "flowers": return "Квітник/поле";
+      default: return "Зона";
+    }
+  }
+  function cropTitle(c){
+    switch(c){
+      case "strawberry": return "Полуниця";
+      case "garlic": return "Часник";
+      case "flowers_general": return "Квіти";
+      default: return "Інше";
+    }
+  }
+
+  function zoneSoftTips(zone, now){
+    // very gentle, month-based starter hints
+    const m = now.getMonth(); // 0=Jan
+    const tips = [];
+    if (zone.crop === "strawberry"){
+      if (m === 0 || m === 1) { // Jan-Feb
+        tips.push("Якщо буде настрій — глянь, чи не оголились корені після вітру/відлиг.");
+        tips.push("Якщо ґрунт мокрий і важкий — краще не чіпати, просто перевірити мульчу/укриття.");
+        tips.push("Якщо без снігу й морозно — легке укриття/мульча може бути доречною.");
+      } else if (m === 2) { // Mar
+        tips.push("Якщо потепліло — можна потроху прибрати сухе листя (без фанатизму).");
+        tips.push("Якщо є час — огляд на підгнивання, провітрити посадки.");
+      } else if (m === 3) { // Apr
+        tips.push("Якщо земля підсохла — м’яке підживлення (за бажанням) і розпушити міжряддя.");
+        tips.push("Якщо хочеться — профілактичний огляд шкідників/хвороб.");
+      } else {
+        tips.push("Якщо буде настрій — легкий огляд і підтримка вологи без переливу 🙂");
+      }
+    } else if (zone.crop === "garlic"){
+      tips.push("Якщо буде настрій — перевір, чи не виперло зубці після морозу/відлиги.");
+    } else if (zone.crop === "flowers_general"){
+      tips.push("Якщо буде настрій — огляд зимівлі/укриття, без різких рухів 🙂");
+    } else {
+      tips.push("М’який огляд: волога/укриття/порядок на зоні.");
+    }
+    return tips;
+  }
+
+  function renderZones(){
+    const zones = loadZones();
+    $("zoneCount").textContent = String(zones.length);
+    $("emptyZones").style.display = zones.length ? "none" : "block";
+
+    const list = $("zoneList");
+    list.innerHTML = "";
+
+    const now = new Date();
+
+    for (const z of zones){
+      const div = document.createElement("div");
+      div.className = "item";
+      const size = (z.len && z.wid) ? `${z.len}×${z.wid} м` : "розмір не вказано";
+      const crop = cropTitle(z.crop);
+      const qty = z.qty ? `${z.qty}` : "—";
+
+      const tips = zoneSoftTips(z, now).slice(0,2).map(t=>`<div class="meta">• ${t}</div>`).join("");
+
+      div.innerHTML = `
+        <b>${z.name || zoneTypeTitle(z.type)}</b>
+        <div class="meta">${zoneTypeTitle(z.type)} • ${size}</div>
+        <div class="meta">${crop} • кількість: ${qty}${z.note ? " • " + z.note : ""}</div>
+        <div class="meta" style="margin-top:6px;">Підказки (м’яко):</div>
+        ${tips}
+        <div class="btnRow" style="margin-top:10px;">
+          <button data-zdel="${z.id}">🗑 Видалити</button>
+        </div>
+      `;
+      list.appendChild(div);
+    }
+
+    list.querySelectorAll("button[data-zdel]").forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const id = btn.getAttribute("data-zdel");
+        saveZones(loadZones().filter(x=> x.id !== id));
+        renderZones();
+        renderZonesInToday();
+      });
+    });
+  }
+
+  function renderZonesInToday(){
+    // show gentle zone tips inside "М’які підказки на сьогодні"
+    const zones = loadZones();
+    const now = new Date();
+
+    // append zone tips to existing reminders box
+    const box = $("softReminders");
+    const no = $("noReminders");
+
+    let added = 0;
+    for (const z of zones){
+      const tips = zoneSoftTips(z, now);
+      if (!tips.length) continue;
+
+      const div = document.createElement("div");
+      div.className = "item";
+      div.innerHTML = `
+        <b>${z.name || zoneTypeTitle(z.type)} • ${cropTitle(z.crop)}</b>
+        <div class="meta">${tips[0]}</div>
+      `;
+      box.appendChild(div);
+      added++;
+      if (added >= 3) break; // keep it light
+    }
+
+    // if there are no sowings AND no zones, show empty message
+    if (loadSowings().length === 0 && zones.length === 0){
+      no.style.display = "block";
+    } else {
+      no.style.display = "none";
+    }
+  }
+
+  function wireZonesForm(){
+    $("btnSaveZone").addEventListener("click", ()=>{
+      const z = {
+        id: String(Date.now()) + Math.random().toString(16).slice(2),
+        type: $("zoneType").value,
+        name: $("zoneName").value.trim(),
+        len: $("zoneLen").value.trim(),
+        wid: $("zoneWid").value.trim(),
+        crop: $("zoneCrop").value,
+        qty: $("zoneCountInput").value.trim(),
+        note: $("zoneNote").value.trim()
+      };
+      const zones = loadZones();
+      zones.push(z);
+      saveZones(zones);
+
+      $("zoneName").value = "";
+      $("zoneLen").value = "";
+      $("zoneWid").value = "";
+      $("zoneCountInput").value = "";
+      $("zoneNote").value = "";
+
+      renderZones();
+      renderZonesInToday();
+      go("zones");
+    });
+
+    // one-click demo for your strawberry bed 2×1, 24 bushes
+    $("btnAddStrawberryDemo").addEventListener("click", ()=>{
+      const zones = loadZones();
+      zones.push({
+        id: String(Date.now()) + Math.random().toString(16).slice(2),
+        type: "high_bed",
+        name: "Висока грядка №1",
+        len: "2",
+        wid: "1",
+        crop: "strawberry",
+        qty: "24",
+        note: "пересадила восени"
+      });
+      saveZones(zones);
+      renderZones();
+      renderZonesInToday();
+      go("zones");
+    });
   }
 
   function typeMeta(type){
@@ -498,16 +683,21 @@
     });
   }
 
-  function renderAll(){
-    renderSowings();
-    renderSoftReminders();
-  }
+function renderAll(){
+  renderSowings();
+  renderSoftReminders();
+  renderZones();
+  // renderZonesInToday is called after renderSoftReminders to append tips
+  renderZonesInToday();
+}
+
 
   // --- init
   setTodayContent();
   wireNav();
   wireDone();
   wireSowingForm();
+  wireZonesForm();
   renderAll();
 
   // Register service worker if present (added later)
